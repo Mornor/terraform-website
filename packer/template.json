@@ -1,0 +1,62 @@
+{
+  "variables": {
+    "version": "",
+    "region": "",
+    "vpc_id": "",
+    "subnet_id": "",
+    "source_ami": "",
+    "ami_name_prefix": "website",
+    "aws_profile": "",
+    "aws_access_key": "",
+    "aws_secret_key": ""
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "{{user `region` }}",
+      "source_ami": "{{user `source_ami` }}",
+      "instance_type": "",
+      "vpc_id": "{{user `vpc_id` }}",
+      "security_group_id": "",
+      "subnet_id": "{{user `subnet_id` }}",
+      "ssh_username": "",
+      "ssh_keypair_name": "",
+      "ssh_private_key_file": "data/.pem",
+      "ssh_pty": true,
+      "ami_users": [""],
+      "snapshot_users": [""],
+      "ami_name": "{{user `ami_name_prefix`}}-{{user `version`}}",
+      "profile": "{{user `aws_profile`}}",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}"
+    }
+  ],
+  "provisioners": [
+     {
+       "type": "shell",
+       "remote_path": "/home/centos/setup.sh",
+       "script": "scripts/setup.sh"
+     },
+     {
+       "type": "ansible-local",
+       "playbook_file": "./ansible_roles/main.yml",
+       "playbook_dir": "./ansible_roles/",
+       "inventory_file": "./ansible_roles/inventories/master"
+     },
+     {
+       "type": "shell",
+       "remote_path": "/home/centos/curl_metadata.sh",
+       "inline": [
+         "curl http://169.254.169.254/latest/meta-data/public-ipv4 | xargs -I target_ip echo TARGET_IP=target_ip"
+       ]
+     },
+     {
+       "type": "shell-local",
+       "command": "scripts/serverspec.sh"
+     },
+     {
+       "type": "shell-local",
+       "command": "egrep ' [^1-9] failures' build.log"
+     }
+   ]
+ }
