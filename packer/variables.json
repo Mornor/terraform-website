@@ -1,5 +1,15 @@
 {
-  "version": "0.0.1"
-  "aws_access_key": "foo",
-  "aws_secret_key": "bar"
+  "version": "",
+  "region": "",
+  "source_ami": "",
+  "instance_type": "",
+  "vpc_id": "",
+  "subnet_id": "",
+  "ssh_username": "",
+  "ssh_keypair_name": "",
+  "ami_user": "",
+  "snapshot_user": "",
+  "ami_name_prefix": "",
+  "security_group_id": "",
+  "aws_profile": ""
 }
