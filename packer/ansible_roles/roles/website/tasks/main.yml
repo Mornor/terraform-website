@@ -1,0 +1,44 @@
+---
+
+- name: Copy file to create Docker container
+  copy:
+      src: ../files/
+      dest: /home/centos
+
+- name: Install list of packages
+  yum: pkg={{item}} state=installed
+  with_items:
+     - yum-utils
+     - device-mapper-persistent-data
+  become: yes
+
+- name: Add EPEL repo
+  command: yum --enablerepo=extras install -y epel-release
+  become: yes
+
+- name: Install device-mapper
+  yum: pkg=python-pip state=present
+
+- name: Add Docker repo
+  command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  become: yes
+
+- name: Install Docker CE
+  yum: pkg=docker-ce state=installed
+  become: yes
+
+- pip:
+    name: docker-py
+  become: yes
+
+- name: Make sure Docker is started
+  service:
+      name: docker
+      state: started
+  become: yes
+
+- name: Create the Docker container
+  docker_image:
+      path: /home/centos
+      name: "website"
+  become: yes

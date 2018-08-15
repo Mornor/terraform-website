@@ -1,0 +1,6 @@
+---
+
+- name: Provison web app
+  hosts: ec2_instance
+  roles:
+    - website

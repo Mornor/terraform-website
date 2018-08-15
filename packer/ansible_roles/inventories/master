@@ -1,0 +1,2 @@
+[ec2_instance]
+localhost ansible_connection=local
