@@ -1,34 +1,21 @@
 {
-  "variables": {
-    "version": "",
-    "region": "",
-    "vpc_id": "",
-    "subnet_id": "",
-    "source_ami": "",
-    "ami_name_prefix": "website",
-    "aws_profile": "",
-    "aws_access_key": "",
-    "aws_secret_key": ""
-  },
   "builders": [
     {
       "type": "amazon-ebs",
-      "region": "{{user `region` }}",
-      "source_ami": "{{user `source_ami` }}",
-      "instance_type": "",
-      "vpc_id": "{{user `vpc_id` }}",
+      "region": "{{ region }}",
+      "source_ami": "{{ source_ami }}",
+      "instance_type": "{{ instance_type }}",
+      "vpc_id": "{{ vpc_id }}",
       "security_group_id": "",
-      "subnet_id": "{{user `subnet_id` }}",
-      "ssh_username": "",
-      "ssh_keypair_name": "",
-      "ssh_private_key_file": "data/.pem",
+      "subnet_id": "{{ subnet_id }}",
+      "ssh_username": "{{ ssh_username }}",
+      "ssh_keypair_name": "{{ ssh_keypair_name }}",
+      "ssh_private_key_file": "data/{{ ssh_keypair_name }}.pem",
       "ssh_pty": true,
-      "ami_users": [""],
-      "snapshot_users": [""],
-      "ami_name": "{{user `ami_name_prefix`}}-{{user `version`}}",
-      "profile": "{{user `aws_profile`}}",
-      "access_key": "{{user `aws_access_key`}}",
-      "secret_key": "{{user `aws_secret_key`}}"
+      "ami_users": ["{{ ami_user }}"],
+      "snapshot_users": ["{{ snapshot_user }}"],
+      "ami_name": "{{ ami_name_prefix }}-{{ version }}",
+      "profile": "{{ aws_profile }}"
     }
   ],
   "provisioners": [
