@@ -1,2 +1,3 @@
-*.pem
 variables-prod.json
+*.pem
+*.log
