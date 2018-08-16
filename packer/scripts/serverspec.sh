@@ -1,4 +1,4 @@
-+#!/bin/bash
+#!/bin/bash
 
 # This script is locally executed, but targets the AMI created by Packer
 
