@@ -1,2 +1,2 @@
 ### Packer
- - `packer build -var-file=variables.json template.json`
+ - `packer build -var-file=variables.json template.json | tee build.log`
