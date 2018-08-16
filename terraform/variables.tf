@@ -24,8 +24,7 @@ variable "is_elb_internal" {
 
 # CentOS Linux 7 on eu-central-1
 variable "ec2-ami" {
-  #default = "ami-337be65c"
-  default = "ami-05953085225af2d6a"
+  default = "ami-337be65c"
 }
 
 variable "instance-type" {
