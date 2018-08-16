@@ -43,3 +43,11 @@ variable "ec2_scaling_max_size" {
 variable "ec2_scaling_min_size" {
   default = 2
 }
+
+variable "docker_container_name" {
+  default = "website"
+}
+
+variable "docker_container_port" {
+  default = 8080
+}
