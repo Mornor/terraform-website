@@ -6,7 +6,7 @@ This repository can be used to
 ## Packer
 Packer is used to build a custom AMI, test it with Serverspec, and upload it to AWS (S3) if the tests are successful.
 
-#### What is being built
+#### What is built
 A custom Docker image is being built by the Packer script, on top of a CentOS image. It only consists of a [index.html](https://github.com/Mornor/terraform-website/blob/master/packer/ansible_roles/roles/website/files/public/index.html) which is exposed through port [`8080`](https://github.com/Mornor/terraform-website/blob/master/packer/ansible_roles/roles/website/files/Dockerfile) using a [Node.js](https://github.com/Mornor/terraform-website/blob/master/packer/ansible_roles/roles/website/files/server.js) server.
 
 #### How to
@@ -29,6 +29,7 @@ A custom Docker image is being built by the Packer script, on top of a CentOS im
   - 1 Elastic Load Balancer
 
 #### How to
+- Change/adapt the `variables.tf` [file](https://github.com/Mornor/terraform-website/blob/master/terraform/variables.tf).
 - Check the plan: `terraform plan`
 - Apply it: `terraform apply`
 - Destroy the infrastructure: `terraform destroy`
@@ -36,6 +37,7 @@ A custom Docker image is being built by the Packer script, on top of a CentOS im
 ### Notes
   - The Ansible playbook should be completely separated from the Packer script, as these two should not be correlated. A good solution would be to upload the playbook to S3, and then download it with Packer.
   - When playing around, make sure you destroyed the snapshots linked to the AMI, as well as the EBS volumes built with Packer.
+  - [`execute.sh`](https://github.com/Mornor/terraform-website/blob/master/execute.sh) could be used to execute both the Packer script and the Terraform template, but was not tested.
 
 ### Requirements
   - AWS account
