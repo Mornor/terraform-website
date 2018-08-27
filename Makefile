@@ -1,4 +1,4 @@
-PACKER_CONFIG_FILE=variables-prod.json
+PACKER_CONFIG_FILE=variables.json
 
 ami:
 	cd packer; packer build -var-file=${PACKER_CONFIG_FILE} template.json | tee build.log; cd ..;

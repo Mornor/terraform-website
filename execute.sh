@@ -1,6 +1,8 @@
 #!/bin/bash
 
-PACKER_CONFIG_FILE="variables-prod.json"
+# This script could fails because of race conditions.
+
+PACKER_CONFIG_FILE="variables.json"
 
 # Execute the Packer script
 echo "Building the AMI with Packer..."
@@ -18,8 +20,8 @@ sed -i "" -E s/ami-.*/${PACKER_AMI_ID}\"/g terraform/variables.tf
 echo "Applying Terraform template..."
 cd terraform
 terraform apply -auto-approve
+cd ..
 echo "Terraforming done!"
 
 # Reset CentOS AMI on the terraform/variables.tf file
-cd ..
 sed -i "" -E s/ami-.*/${CENTOS_AMI_ID}\"/g terraform/variables.tf
