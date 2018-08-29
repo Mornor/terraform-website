@@ -26,7 +26,7 @@
       "subnet_id": "{{ user `subnet_id` }}",
       "ssh_username": "{{ user `ssh_username` }}",
       "ssh_keypair_name": "{{ user `ssh_keypair_name` }}",
-      "ssh_private_key_file": "data/{{ user `ssh_keypair_name` }}.pem",
+      "ssh_private_key_file": "keys/{{ user `ssh_keypair_name` }}.pem",
       "ssh_pty": true,
       "ami_users": ["{{ user `ami_user` }}"],
       "snapshot_users": ["{{ user `snapshot_user` }}"],
