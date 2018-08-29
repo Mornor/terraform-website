@@ -37,7 +37,7 @@
       state: started
   become: yes
 
-- name: Create the Docker container
+- name: Creating the Docker container
   docker_image:
       path: /home/centos
       name: "website"
