@@ -19,6 +19,7 @@ sed -i "" -E s/ami-.*/${PACKER_AMI_ID}\"/g terraform/variables.tf
 # Run the Terraform script
 echo "Applying Terraform template..."
 cd terraform
+terraform init
 terraform apply -auto-approve
 cd ..
 echo "Terraforming done!"
