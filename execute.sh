@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# This script could fails because of race conditions.
-
 PACKER_CONFIG_FILE="variables.json"
 
 # Execute the Packer script
