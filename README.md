@@ -1,9 +1,9 @@
-## Terraform website/application AWS infrastructure, built with a custom AMI for EC2 instances 
+## Terraform website/application AWS infrastructure, built with a custom AMI for EC2 instances
 This repository can be used to
   1. Build the AWS infrastructure with Terraform (see Terraform section)
   2. Build a custom AMI containing a Docker container with Packer, provisioned by Ansible and tested with Serverspec.
 
-If you'd like to trigger both the creation of the AMI with Packer, use the AMI created and trigger the Terraform template, you can use the - [`execute.sh`](https://github.com/Mornor/terraform-website/blob/master/execute.sh) script.
+If you'd like to trigger both the creation of the AMI with Packer, use the AMI created and trigger the Terraform template, you can use the [`execute.sh`](https://github.com/Mornor/terraform-website/blob/master/execute.sh) script.
 
 ## Packer
 Packer is used to build a custom AMI, test it with Serverspec, and upload it to AWS (S3) if the tests are successful.
