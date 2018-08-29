@@ -3,6 +3,8 @@ This repository can be used to
   1. Build the AWS infrastructure with Terraform (see Terraform section)
   2. Build a custom AMI containing a Docker container with Packer, provisioned by Ansible and tested with Serverspec.
 
+If you'd like to trigger both the creation of the AMI with Packer, use the AMI created and trigger the Terraform template, you can use the - [`execute.sh`](https://github.com/Mornor/terraform-website/blob/master/execute.sh) script.
+
 ## Packer
 Packer is used to build a custom AMI, test it with Serverspec, and upload it to AWS (S3) if the tests are successful.
 
@@ -10,12 +12,15 @@ Packer is used to build a custom AMI, test it with Serverspec, and upload it to 
 A custom Docker image is being built by the Packer script, on top of a CentOS image. It only consists of a [index.html](https://github.com/Mornor/terraform-website/blob/master/packer/ansible_roles/roles/website/files/public/index.html) which is exposed through port [`8080`](https://github.com/Mornor/terraform-website/blob/master/packer/ansible_roles/roles/website/files/Dockerfile) using a [Node.js](https://github.com/Mornor/terraform-website/blob/master/packer/ansible_roles/roles/website/files/server.js) server.
 
 #### How to
+  - cd into the packer directory
+  - `mkdir keys`
+  - Download the Instance Key pair from your AWS account, name it `website.pem`, set the correct rights (`chmod 400 website.pem`) and move it into `packer/keys`
   - Complete the file `packer/variables.json`
   - Reference your AWS profile in the Packer [`template.json`](https://github.com/Mornor/terraform-website/blob/master/packer/template.json#L16)
   - `packer build -var-file=variables.json template.json | tee build.log`
 
 #### Testing
-  - [Serverspec](https://serverspec.org/) is used to test the AMI before pushing it to AWS. The tests are defined in the `serverspec.sh` [script](https://github.com/Mornor/terraform-website/blob/master/packer/scripts/serverspec.sh). During the build of the AMI, the logs are ouptuted in a `build.log` file. This file is used to grep the IP of the AMI being build and execute tests against it. Once the tests are done, I grepped for the results and check if no errors have been detected (`egrep ' [^1-9] failures' build.log`). If that is the case, the command will exit with `-1`, making the script fails, hence not pushing the AMI to S3. <br/>
+  - [Serverspec](https://serverspec.org/) is used to test the AMI before pushing it to AWS. The tests are defined in the `serverspec.sh` [script](https://github.com/Mornor/terraform-website/blob/master/packer/scripts/serverspec.sh). During the build of the AMI, the logs are ouptuted in a `build.log` file. This file is used to grep the IP of the AMI being build and execute tests against it. Once the tests are done, I grepped for the results and check if no errors have been detected (`egrep ' [^1-9] failures' build.log`). If that is the case, the command will exit with `1`, making the script fails, hence not pushing the AMI to S3. <br/>
   - A [`Vagrantfile`](https://github.com/Mornor/terraform-website/blob/master/packer/ansible_roles/Vagrantfile) is provided and can be used to locally test the Ansible playbook. To test it, just issue `vagrant up --provision`.
 
 ## Terraform
@@ -35,10 +40,10 @@ A custom Docker image is being built by the Packer script, on top of a CentOS im
 - Apply it: `terraform apply`
 - Destroy the infrastructure: `terraform destroy`
 
-### Notes
+### Notes and further enhancements
   - The Ansible playbook should be completely separated from the Packer script, as these two should not be correlated. A good solution would be to upload the playbook to S3, and then download it with Packer.
   - When playing around, make sure you destroyed the snapshots linked to the AMI, as well as the EBS volumes built with Packer.
-  - [`execute.sh`](https://github.com/Mornor/terraform-website/blob/master/execute.sh) could be used to execute both the Packer script and the Terraform template, but was not tested.
+  - When executing `execute.sh`, would be nice to make sure the script early-exit in case of failures.
 
 ### Requirements
   - AWS account
