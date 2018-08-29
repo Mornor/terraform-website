@@ -4,7 +4,7 @@
 
 # Requirement: we need to be in the rake directory to execute it
 cp -r serverspec/spec-tests/* .
-cp -r data/* .
+cp -r keys/* .
 
 # Get the IP of the AMI built by Packer by greping the log
 #PUBLIC_DNS=`grep "PUBLIC_DNS" build.log | cut -d'=' -f2`
