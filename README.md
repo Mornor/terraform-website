@@ -1,4 +1,4 @@
-## Terraform website/application, built on top of a custom AMI
+## Terraform website/application AWS infrastructure, built with a custom AMI for EC2 instances 
 This repository can be used to
   1. Build the AWS infrastructure with Terraform (see Terraform section)
   2. Build a custom AMI containing a Docker container with Packer, provisioned by Ansible and tested with Serverspec.
