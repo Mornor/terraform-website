@@ -1,4 +1,6 @@
 variables-prod.json
 *.terraform
+*.tfstate
+*.tfstate.backup
 *.pem
 *.log
