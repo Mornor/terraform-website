@@ -29,6 +29,7 @@ A custom Docker image is being built by the Packer script, on top of a CentOS im
   - 1 Elastic Load Balancer
 
 #### How to
+- Build the new AMI with Packer (see Packer section) and copy/paste the AMI id into the `variables.tf` [file](https://github.com/Mornor/terraform-website/blob/master/terraform/variables.tf).
 - Change/adapt the `variables.tf` [file](https://github.com/Mornor/terraform-website/blob/master/terraform/variables.tf).
 - Check the plan: `terraform plan`
 - Apply it: `terraform apply`
